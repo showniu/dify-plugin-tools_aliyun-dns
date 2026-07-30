@@ -22,6 +22,7 @@ zip -rD "${OUTPUT}" \
   icon.svg \
   README.md \
   PRIVACY.md \
+  readme/ \
   _assets/ \
   provider/ \
   tools/ \
