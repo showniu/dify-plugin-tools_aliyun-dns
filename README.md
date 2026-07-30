@@ -2,7 +2,7 @@
 
 A Dify tool plugin for managing Alibaba Cloud (Aliyun) DNS records — list, add, update, delete, enable and disable DNS records through the Alibaba Cloud DNS API.
 
-[简体中文](./readme/README_zh_Hans.md)
+[Simplified Chinese](./readme/README_zh_Hans.md)
 
 ## Tools
 
