@@ -8,7 +8,7 @@ A Dify tool plugin for managing Alibaba Cloud (Aliyun) DNS records — list, add
 
 | Tool | Description |
 |------|-------------|
-| `list_records` | List DNS records of a domain, with optional filters by hostname (RR), record type and value |
+| `list_records` | List DNS records of a domain, with optional filters by hostname (RR), record type, value and status (Enable/Disable) |
 | `add_record` | Add a new DNS record to a domain |
 | `update_record` | Update an existing DNS record by its Record ID |
 | `delete_record` | Delete a DNS record by its Record ID |
@@ -37,6 +37,7 @@ Create an AccessKey in the [Alibaba Cloud RAM Console](https://ram.console.aliyu
 After authorization, the tools can be used in Dify Agents or Workflows:
 
 - *List records*: "List all A records of example.com"
+- *Filter by status*: "List all disabled DNS records of example.com"
 - *Add record*: "Add an A record `www` for example.com pointing to 1.2.3.4 with TTL 600"
 - *Update record*: "Change the value of record 123456789 to 5.6.7.8"
 - *Delete record*: "Delete DNS record 123456789"

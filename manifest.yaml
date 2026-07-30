@@ -1,4 +1,4 @@
-version: 0.0.1
+version: 0.0.2
 type: plugin
 author: showniu
 name: aliyun-dns
@@ -23,7 +23,7 @@ meta:
     entrypoint: main
     language: python
     version: "3.12"
-  version: 0.0.1
+  version: 0.0.2
 resource:
   memory: 52428800
   permission:

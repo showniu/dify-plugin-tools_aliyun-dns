@@ -26,11 +26,18 @@ class ListRecordsTool(Tool):
         rr_keyword: str = tool_parameters.get("rr_keyword", "").strip() or None
         type_keyword: str = tool_parameters.get("type_keyword", "").strip() or None
         value_keyword: str = tool_parameters.get("value_keyword", "").strip() or None
+        status: str = tool_parameters.get("status", "").strip() or None
         page_number: int = int(tool_parameters.get("page_number", 1))
         page_size: int = int(tool_parameters.get("page_size", 20))
 
         if not domain_name:
             yield self.create_text_message("错误：domain_name 参数不能为空。")
+            return
+
+        if status and status not in ("Enable", "Disable"):
+            yield self.create_text_message(
+                "错误：status 参数取值无效，只能为 Enable（启用解析）或 Disable（暂停解析）。"
+            )
             return
 
         try:
@@ -47,6 +54,8 @@ class ListRecordsTool(Tool):
                 request.type_key_word = type_keyword
             if value_keyword:
                 request.value_key_word = value_keyword
+            if status:
+                request.status = status
 
             response = client.describe_domain_records(request)
             body = response.body
@@ -61,6 +70,8 @@ class ListRecordsTool(Tool):
                 f"域名：{domain_name}",
                 f"总记录数：{total_count}，当前页：{page_number}，每页：{page_size}，本次返回：{len(records)} 条",
             ]
+            if status:
+                summary_lines.insert(1, f"状态筛选：{status}")
             if records:
                 summary_lines.append("")
                 summary_lines.append("| 序号 | 记录ID | 主机记录 | 类型 | 记录值 | TTL | 状态 |")
@@ -80,6 +91,7 @@ class ListRecordsTool(Tool):
                     "total_count": total_count,
                     "page_number": page_number,
                     "page_size": page_size,
+                    "status_filter": status,
                     "records": records,
                 }
             )

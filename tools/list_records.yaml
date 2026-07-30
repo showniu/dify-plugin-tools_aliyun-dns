@@ -6,13 +6,13 @@ identity:
     zh_Hans: 查询 DNS 解析记录
 description:
   human:
-    en_US: Query DNS records for a specified domain, supporting filtering by subdomain, record type, and record value.
-    zh_Hans: 查询指定域名下的 DNS 解析记录列表，支持按主机记录、记录类型、记录值进行筛选过滤。
+    en_US: Query DNS records for a specified domain, supporting filtering by subdomain, record type, record value and status.
+    zh_Hans: 查询指定域名下的 DNS 解析记录列表，支持按主机记录、记录类型、记录值、解析状态进行筛选过滤。
   llm: >
     Use this tool to list DNS records for a domain hosted on Alibaba Cloud DNS.
     You can filter results by subdomain (RR), record type (A, CNAME, MX, TXT, etc.),
-    or record value. Returns a paginated list of matching DNS records with their IDs,
-    types, values, TTL, and status.
+    record value, or status (Enable/Disable). Returns a paginated list of matching
+    DNS records with their IDs, types, values, TTL, and status.
 parameters:
   - name: domain_name
     type: string
@@ -63,6 +63,28 @@ parameters:
       zh_Hans: 按记录值关键字筛选，如 IP 地址或主机名
     llm_description: >
       Optional keyword to filter records by their value, e.g. "1.2.3.4" or "cdn.example.com".
+    form: llm
+  - name: status
+    type: select
+    required: false
+    label:
+      en_US: Status Filter
+      zh_Hans: 解析状态筛选
+    human_description:
+      en_US: Filter by record status - Enable (active) or Disable (paused)
+      zh_Hans: 按解析记录状态筛选 - Enable（启用解析）或 Disable（暂停解析）
+    llm_description: >
+      Optional record status to filter by: "Enable" returns only active records,
+      "Disable" returns only paused records. Leave empty to return records of all statuses.
+    options:
+      - value: Enable
+        label:
+          en_US: Enable
+          zh_Hans: 启用解析
+      - value: Disable
+        label:
+          en_US: Disable
+          zh_Hans: 暂停解析
     form: llm
   - name: page_number
     type: number
