@@ -1,0 +1,52 @@
+identity:
+  name: set_record_status
+  author: showniu
+  label:
+    en_US: Enable/Disable DNS Record
+    zh_Hans: 启用/停用 DNS 解析记录
+description:
+  human:
+    en_US: Enable or disable a DNS record on Alibaba Cloud DNS without deleting it.
+    zh_Hans: 启用或停用阿里云 DNS 中的某条解析记录，不会删除该记录。
+  llm: >
+    Use this tool to enable or disable an existing DNS record on Alibaba Cloud DNS.
+    Disabling a record stops it from resolving without deleting it, which is useful
+    for maintenance or testing. Provide the record ID and desired status (Enable/Disable).
+parameters:
+  - name: record_id
+    type: string
+    required: true
+    label:
+      en_US: Record ID
+      zh_Hans: 记录 ID
+    human_description:
+      en_US: The unique ID of the DNS record to enable or disable
+      zh_Hans: 要启用或停用的 DNS 解析记录唯一 ID
+    llm_description: >
+      The unique RecordId of the DNS record to change status for.
+      Use the list_records tool first to find the correct record ID.
+    form: llm
+  - name: status
+    type: select
+    required: true
+    label:
+      en_US: Status
+      zh_Hans: 状态
+    human_description:
+      en_US: Enable or Disable the DNS record
+      zh_Hans: 启用或停用该解析记录
+    llm_description: >
+      The target status for the DNS record: "Enable" to activate it, "Disable" to deactivate it.
+    options:
+      - value: Enable
+        label:
+          en_US: Enable
+          zh_Hans: 启用
+      - value: Disable
+        label:
+          en_US: Disable
+          zh_Hans: 停用
+    form: llm
+extra:
+  python:
+    source: tools/set_record_status.py

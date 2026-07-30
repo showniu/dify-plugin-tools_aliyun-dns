@@ -1,0 +1,93 @@
+identity:
+  name: list_records
+  author: showniu
+  label:
+    en_US: List DNS Records
+    zh_Hans: 查询 DNS 解析记录
+description:
+  human:
+    en_US: Query DNS records for a specified domain, supporting filtering by subdomain, record type, and record value.
+    zh_Hans: 查询指定域名下的 DNS 解析记录列表，支持按主机记录、记录类型、记录值进行筛选过滤。
+  llm: >
+    Use this tool to list DNS records for a domain hosted on Alibaba Cloud DNS.
+    You can filter results by subdomain (RR), record type (A, CNAME, MX, TXT, etc.),
+    or record value. Returns a paginated list of matching DNS records with their IDs,
+    types, values, TTL, and status.
+parameters:
+  - name: domain_name
+    type: string
+    required: true
+    label:
+      en_US: Domain Name
+      zh_Hans: 域名
+    human_description:
+      en_US: The root domain name to query (e.g. example.com)
+      zh_Hans: 要查询的根域名（如 example.com）
+    llm_description: >
+      The root domain name to query DNS records for, e.g. "example.com".
+      Do not include subdomains here.
+    form: llm
+  - name: rr_keyword
+    type: string
+    required: false
+    label:
+      en_US: Subdomain Filter (RR)
+      zh_Hans: 主机记录筛选
+    human_description:
+      en_US: Filter by subdomain prefix, e.g. "www" or "@" for root domain
+      zh_Hans: 按主机记录（子域名前缀）筛选，如 "www" 或 "@" 表示根域名
+    llm_description: >
+      Optional subdomain prefix to filter by, e.g. "www", "mail", "@" (root).
+      Leave empty to return all subdomains.
+    form: llm
+  - name: type_keyword
+    type: string
+    required: false
+    label:
+      en_US: Record Type Filter
+      zh_Hans: 记录类型筛选
+    human_description:
+      en_US: Filter by DNS record type, e.g. A, CNAME, MX, TXT, AAAA
+      zh_Hans: 按记录类型筛选，如 A、CNAME、MX、TXT、AAAA
+    llm_description: >
+      Optional DNS record type to filter by. Common types: A, AAAA, CNAME, MX, TXT, NS, SRV, CAA.
+    form: llm
+  - name: value_keyword
+    type: string
+    required: false
+    label:
+      en_US: Record Value Filter
+      zh_Hans: 记录值筛选
+    human_description:
+      en_US: Filter by record value keyword, e.g. an IP address or hostname
+      zh_Hans: 按记录值关键字筛选，如 IP 地址或主机名
+    llm_description: >
+      Optional keyword to filter records by their value, e.g. "1.2.3.4" or "cdn.example.com".
+    form: llm
+  - name: page_number
+    type: number
+    required: false
+    default: 1
+    label:
+      en_US: Page Number
+      zh_Hans: 页码
+    human_description:
+      en_US: Page number for pagination, starting from 1
+      zh_Hans: 分页页码，从 1 开始
+    llm_description: Page number for paginated results, default is 1.
+    form: form
+  - name: page_size
+    type: number
+    required: false
+    default: 20
+    label:
+      en_US: Page Size
+      zh_Hans: 每页数量
+    human_description:
+      en_US: Number of records per page, max 500
+      zh_Hans: 每页返回记录数，最大 500
+    llm_description: Number of DNS records to return per page, default 20, max 500.
+    form: form
+extra:
+  python:
+    source: tools/list_records.py

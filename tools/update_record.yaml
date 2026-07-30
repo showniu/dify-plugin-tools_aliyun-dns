@@ -1,0 +1,135 @@
+identity:
+  name: update_record
+  author: showniu
+  label:
+    en_US: Update DNS Record
+    zh_Hans: 修改 DNS 解析记录
+description:
+  human:
+    en_US: Update an existing DNS record on Alibaba Cloud DNS by its Record ID.
+    zh_Hans: 通过记录 ID 修改阿里云 DNS 中已有的解析记录内容。
+  llm: >
+    Use this tool to modify an existing DNS record on Alibaba Cloud DNS.
+    You must provide the record ID (RecordId), which can be obtained from the list_records tool.
+    You can update the subdomain (RR), record type, value, TTL, and MX priority.
+    All fields except record_id are required to be provided even if unchanged.
+parameters:
+  - name: record_id
+    type: string
+    required: true
+    label:
+      en_US: Record ID
+      zh_Hans: 记录 ID
+    human_description:
+      en_US: The unique ID of the DNS record to update (use list_records to find it)
+      zh_Hans: 要修改的 DNS 解析记录的唯一 ID（可通过查询接口获取）
+    llm_description: >
+      The unique RecordId of the DNS record to update. Use the list_records tool first
+      to find the record ID you want to modify.
+    form: llm
+  - name: rr
+    type: string
+    required: true
+    label:
+      en_US: Host Record (RR)
+      zh_Hans: 主机记录
+    human_description:
+      en_US: New subdomain prefix, e.g. "www", "@" for root, "*" for wildcard
+      zh_Hans: 新的主机记录，如 "www"、"@"（根域名）、"*"（泛解析）
+    llm_description: >
+      The new subdomain prefix (host record). Use "@" for root domain, "*" for wildcard.
+    form: llm
+  - name: type
+    type: select
+    required: true
+    label:
+      en_US: Record Type
+      zh_Hans: 记录类型
+    human_description:
+      en_US: New DNS record type
+      zh_Hans: 新的 DNS 记录类型
+    llm_description: >
+      The DNS record type. Choose from: A, AAAA, CNAME, MX, TXT, NS, SRV, CAA,
+      REDIRECT_URL, FORWARD_URL.
+    options:
+      - value: A
+        label:
+          en_US: A (IPv4 Address)
+          zh_Hans: A（IPv4 地址）
+      - value: AAAA
+        label:
+          en_US: AAAA (IPv6 Address)
+          zh_Hans: AAAA（IPv6 地址）
+      - value: CNAME
+        label:
+          en_US: CNAME (Alias)
+          zh_Hans: CNAME（别名）
+      - value: MX
+        label:
+          en_US: MX (Mail Server)
+          zh_Hans: MX（邮件服务器）
+      - value: TXT
+        label:
+          en_US: TXT (Text Record)
+          zh_Hans: TXT（文本记录）
+      - value: NS
+        label:
+          en_US: NS (Name Server)
+          zh_Hans: NS（名称服务器）
+      - value: SRV
+        label:
+          en_US: SRV
+          zh_Hans: SRV
+      - value: CAA
+        label:
+          en_US: CAA
+          zh_Hans: CAA
+      - value: REDIRECT_URL
+        label:
+          en_US: REDIRECT_URL (URL Forward)
+          zh_Hans: REDIRECT_URL（URL 转发）
+      - value: FORWARD_URL
+        label:
+          en_US: FORWARD_URL (Explicit URL Forward)
+          zh_Hans: FORWARD_URL（显性 URL 转发）
+    form: llm
+  - name: value
+    type: string
+    required: true
+    label:
+      en_US: Record Value
+      zh_Hans: 记录值
+    human_description:
+      en_US: New record value, e.g. IP address for A record
+      zh_Hans: 新的记录值，如 A 记录填 IP 地址
+    llm_description: >
+      The new value for this DNS record. For A: IPv4 address. For CNAME: target hostname.
+      For TXT: text string. For MX: mail server hostname.
+    form: llm
+  - name: ttl
+    type: number
+    required: false
+    default: 600
+    label:
+      en_US: TTL (seconds)
+      zh_Hans: TTL（秒）
+    human_description:
+      en_US: Time-To-Live in seconds, default 600
+      zh_Hans: 生存时间（秒），默认 600
+    llm_description: Time-To-Live in seconds. Default is 600.
+    form: form
+  - name: priority
+    type: number
+    required: false
+    default: 10
+    label:
+      en_US: MX Priority
+      zh_Hans: MX 优先级
+    human_description:
+      en_US: "Priority for MX records (1-50)"
+      zh_Hans: MX 记录优先级（1-50）
+    llm_description: Priority for MX records only, range 1-50. Lower = higher priority.
+    form: llm
+extra:
+  python:
+    source: tools/update_record.py

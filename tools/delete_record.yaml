@@ -1,0 +1,32 @@
+identity:
+  name: delete_record
+  author: showniu
+  label:
+    en_US: Delete DNS Record
+    zh_Hans: 删除 DNS 解析记录
+description:
+  human:
+    en_US: Delete a DNS record from Alibaba Cloud DNS by its Record ID.
+    zh_Hans: 通过记录 ID 从阿里云 DNS 中删除一条解析记录。
+  llm: >
+    Use this tool to permanently delete a DNS record from Alibaba Cloud DNS.
+    You must provide the record ID (RecordId). This action is irreversible.
+    Use list_records first to find the record ID. Returns success confirmation on deletion.
+parameters:
+  - name: record_id
+    type: string
+    required: true
+    label:
+      en_US: Record ID
+      zh_Hans: 记录 ID
+    human_description:
+      en_US: The unique ID of the DNS record to delete (use list_records to find it)
+      zh_Hans: 要删除的 DNS 解析记录唯一 ID（可通过查询接口获取）
+    llm_description: >
+      The unique RecordId of the DNS record to permanently delete.
+      Use the list_records tool first to find the correct record ID.
+      WARNING: This action cannot be undone.
+    form: llm
+extra:
+  python:
+    source: tools/delete_record.py

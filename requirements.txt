@@ -1,0 +1,4 @@
+alibabacloud-alidns20150109>=3.0.0
+alibabacloud-tea-openapi>=0.3.0
+alibabacloud-tea-util>=0.3.0
+dify-plugin==0.10.0

@@ -1,0 +1,40 @@
+version: 0.0.1
+type: plugin
+author: showniu
+name: aliyun-dns
+created_at: "2026-07-30T00:00:00Z"
+label:
+  en_US: Aliyun DNS
+  zh_Hans: 阿里云 DNS
+description:
+  en_US: Manage Aliyun DNS records - list, add, update, delete and toggle DNS records.
+  zh_Hans: 管理阿里云 DNS 解析记录，支持查询、添加、修改、删除和启停解析记录。
+icon: icon.svg
+category: tool
+privacy: PRIVACY.md
+repo: https://github.com/showniu/dify-plugin-tools_aliyun-dns
+tags:
+  - utilities
+meta:
+  arch:
+    - amd64
+    - arm64
+  runner:
+    entrypoint: main
+    language: python
+    version: "3.12"
+  version: 0.0.1
+resource:
+  memory: 52428800
+  permission:
+    tool:
+      enabled: true
+    endpoint:
+      enabled: false
+    model:
+      enabled: false
+    node:
+      enabled: false
+plugins:
+  tools:
+    - provider/aliyun_dns.yaml

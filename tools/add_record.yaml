@@ -1,0 +1,138 @@
+identity:
+  name: add_record
+  author: showniu
+  label:
+    en_US: Add DNS Record
+    zh_Hans: 添加 DNS 解析记录
+description:
+  human:
+    en_US: Add a new DNS record to the specified domain on Alibaba Cloud DNS.
+    zh_Hans: 在阿里云 DNS 中为指定域名添加一条新的解析记录。
+  llm: >
+    Use this tool to create a new DNS record for a domain on Alibaba Cloud DNS.
+    You need to provide the domain name, subdomain (RR), record type, and record value.
+    Optionally set TTL and MX priority. Returns the newly created record ID on success.
+parameters:
+  - name: domain_name
+    type: string
+    required: true
+    label:
+      en_US: Domain Name
+      zh_Hans: 域名
+    human_description:
+      en_US: The root domain name (e.g. example.com)
+      zh_Hans: 根域名（如 example.com）
+    llm_description: >
+      The root domain name under which to add the DNS record, e.g. "example.com".
+    form: llm
+  - name: rr
+    type: string
+    required: true
+    label:
+      en_US: Host Record (RR)
+      zh_Hans: 主机记录
+    human_description:
+      en_US: Subdomain prefix, e.g. "www", "mail", "@" for root, "*" for wildcard
+      zh_Hans: 主机记录（子域名前缀），如 "www"、"mail"、"@" 表示根域名、"*" 表示泛解析
+    llm_description: >
+      The subdomain prefix (host record), e.g. "www" for www.example.com,
+      "@" for the root domain itself, "*" for wildcard resolution.
+    form: llm
+  - name: type
+    type: select
+    required: true
+    label:
+      en_US: Record Type
+      zh_Hans: 记录类型
+    human_description:
+      en_US: DNS record type
+      zh_Hans: DNS 记录类型
+    llm_description: >
+      The DNS record type. Choose from: A (IPv4), AAAA (IPv6), CNAME (alias),
+      MX (mail), TXT (text/SPF), NS (nameserver), SRV, CAA, REDIRECT_URL, FORWARD_URL.
+    options:
+      - value: A
+        label:
+          en_US: A (IPv4 Address)
+          zh_Hans: A（IPv4 地址）
+      - value: AAAA
+        label:
+          en_US: AAAA (IPv6 Address)
+          zh_Hans: AAAA（IPv6 地址）
+      - value: CNAME
+        label:
+          en_US: CNAME (Alias)
+          zh_Hans: CNAME（别名）
+      - value: MX
+        label:
+          en_US: MX (Mail Server)
+          zh_Hans: MX（邮件服务器）
+      - value: TXT
+        label:
+          en_US: TXT (Text Record)
+          zh_Hans: TXT（文本记录）
+      - value: NS
+        label:
+          en_US: NS (Name Server)
+          zh_Hans: NS（名称服务器）
+      - value: SRV
+        label:
+          en_US: SRV
+          zh_Hans: SRV
+      - value: CAA
+        label:
+          en_US: CAA
+          zh_Hans: CAA
+      - value: REDIRECT_URL
+        label:
+          en_US: REDIRECT_URL (URL Forward)
+          zh_Hans: REDIRECT_URL（URL 转发）
+      - value: FORWARD_URL
+        label:
+          en_US: FORWARD_URL (Explicit URL Forward)
+          zh_Hans: FORWARD_URL（显性 URL 转发）
+    form: llm
+  - name: value
+    type: string
+    required: true
+    label:
+      en_US: Record Value
+      zh_Hans: 记录值
+    human_description:
+      en_US: The record value, e.g. an IP address for A record, a hostname for CNAME
+      zh_Hans: 记录值，A 记录填 IP 地址，CNAME 记录填目标主机名
+    llm_description: >
+      The value for this DNS record. For A record: IPv4 address like "1.2.3.4".
+      For CNAME: target hostname like "cdn.example.com". For MX: mail server hostname.
+      For TXT: text string (quote if contains spaces).
+    form: llm
+  - name: ttl
+    type: number
+    required: false
+    default: 600
+    label:
+      en_US: TTL (seconds)
+      zh_Hans: TTL（秒）
+    human_description:
+      en_US: "Time-To-Live in seconds, default 600. Common values: 60, 120, 600, 3600"
+      zh_Hans: 生存时间（秒），默认 600。常用值：60、120、600、3600
+    llm_description: >
+      Time-To-Live in seconds. Default is 600. Use smaller values for records that change frequently.
+    form: form
+  - name: priority
+    type: number
+    required: false
+    default: 10
+    label:
+      en_US: MX Priority
+      zh_Hans: MX 优先级
+    human_description:
+      en_US: "Priority for MX records (1-50), lower number = higher priority"
+      zh_Hans: MX 记录优先级（1-50），数值越小优先级越高
+    llm_description: >
+      Priority for MX records, range 1-50. Lower number means higher priority.
+      Only required when Type is MX.
+    form: llm
+extra:
+  python:
+    source: tools/add_record.py
